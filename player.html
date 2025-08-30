@@ -3,71 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RHub - лучший порно сайт</title>
+    <title>Rhub - Просмотр видео</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Навигационная панель -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <div class="logo">
-                <i class="fab fa-youtube"></i>
-                <span>RHub</span>
-            </div>
-        </div>
-        
-        <div class="nav-center">
-            <div class="search-bar">
-                <input type="text" placeholder="Поиск видео...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="nav-right">
-            <button class="upload-btn">
-                <i class="fas fa-upload"></i>
-            </button>
-            <div class="user-avatar">
-                <i class="fas fa-user-circle"></i>
-            </div>
-        </div>
-    </nav>
+    <!-- Кнопка назад -->
+    <div class="player-header">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            <span>Назад к видео</span>
+        </a>
+    </div>
 
-    <!-- Основное содержимое -->
-    <div class="container">
-        <!-- Боковая панель -->
-        <aside class="sidebar">
-            <div class="sidebar-item">
-                <i class="fas fa-home"></i>
-                <span>Главная</span>
-            </div>            
-        </aside>
-
-        <!-- Контент плеера -->
-        <main class="content">
-            <div class="player-wrapper">
-                <div class="video-container">
-                    <video id="main-video" controls poster=""></video>
+    <!-- Основной контент -->
+    <div class="player-container">
+        <div class="video-player-wrapper">
+            <div class="video-container">
+                <video id="main-video" controls></video>
+            </div>
+            
+            <div class="video-info">
+                <h1 id="video-title"></h1>
+                <div class="video-meta">
+                    <span id="video-views"></span>
+                    <span id="video-date"></span>
                 </div>
-                
-                <div class="video-details">
-                    <h1 id="video-title"></h1>
-                    <div class="video-meta">
-                        <span id="video-views"></span>
-                        
+            </div>
+            
+            <div class="comments-section">
+                <h2>Комментарии</h2>
+                <div class="comment-form">
+                    <div class="user-avatar small">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="comment-input">
+                        <input type="text" id="username" placeholder="Ваше имя">
+                        <textarea id="comment-text" placeholder="Добавьте комментарий..."></textarea>
+                        <div class="comment-actions">
+                            <button id="cancel-comment">Отмена</button>
+                            <button id="submit-comment">Комментировать</button>
+                        </div>
                     </div>
                 </div>
-                
-                
-            
-            
-        </main>
+                <div id="comments-list" class="comments-list">
+                    <!-- Комментарии будут загружаться здесь -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="suggested-videos">
+            <h3>Рекомендуемые видео</h3>
+            <div class="suggested-list" id="suggested-list">
+                <!-- Рекомендуемые видео будут здесь -->
+            </div>
+        </div>
     </div>
 
     <script src="player.js"></script>
