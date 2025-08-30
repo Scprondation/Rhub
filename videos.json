@@ -9,38 +9,5 @@
         "thumbnail": "17565688052929206653443837527229.jpg",
         "channel": "WebDev Master",
         "duration": "15:22"
-    },
-    {
-        "id": 2,
-        "title": "Изучение JavaScript для начинающих - полный курс 2023",
-        "views": 480000,
-        "likes": 24500,
-        "dislikes": 350,
-        "videoFile": "video2.mp4",
-        "thumbnail": "thumb2.jpg",
-        "channel": "CodeWithMe",
-        "duration": "32:18"
-    },
-    {
-        "id": 3,
-        "title": "Верстка на CSS Grid и Flexbox - современные техники",
-        "views": 89000,
-        "likes": 6200,
-        "dislikes": 85,
-        "videoFile": "20250830_184438.mp4",
-        "thumbnail": "17565688052929206653443837527229.jpg",
-        "channel": "Frontend Pro",
-        "duration": "24:47"
-    },
-    {
-        "id": 4,
-        "title": "Создание темной темы для сайта - полное руководство",
-        "views": 156000,
-        "likes": 11200,
-        "dislikes": 140,
-        "videoFile": "video4.mp4",
-        "thumbnail": "thumb4.jpg",
-        "channel": "UI Secrets",
-        "duration": "18:33"
     }
 ]
