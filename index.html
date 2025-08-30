@@ -3,59 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RHub - Главная страница</title>
+    <title>Rhub - Видеоплатформа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Навигационная панель -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="logo">
-                <i class="fab fa-youtube"></i>
-                <span>RHub</span>
-            </div>
+    <!-- Простой заголовок -->
+    <header class="simple-header">
+        <div class="logo">
+            <i class="fas fa-play-circle"></i>
+            <h1>Rhub</h1>
         </div>
-        
-        <div class="nav-center">
-            <div class="search-bar">
-                <input type="text" placeholder="Поиск видео...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="nav-right">
-            <button class="upload-btn">
-                <i class="fas fa-upload"></i>
-            </button>
-            <div class="user-avatar">
-                <i class="fas fa-user-circle"></i>
-            </div>
-        </div>
-    </nav>
+    </header>
 
-    <!-- Основное содержимое -->
-    <div class="container">
-        <!-- Боковая панель -->
-        <aside class="sidebar">
-            <div class="sidebar-item active">
-                <i class="fas fa-home"></i>
-                <span>Главная</span>
-            </div>
-                    </aside>
-
-        <!-- Главный контент -->
-        <main class="content">
-            <section class="video-grid" id="video-list">
-                <!-- Видео будут загружаться через JavaScript -->
-            </section>
-        </main>
-    </div>
+    <!-- Основной контент -->
+    <main class="main-content">
+        <section class="video-grid" id="video-list">
+            <!-- Видео будут загружаться через JavaScript -->
+        </section>
+    </main>
 
     <script src="main.js"></script>
 </body>
