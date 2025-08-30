@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoHost - Ваша видеоплатформа</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>VideoHost</h1>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Поиск видео...">
+            <button>Найти</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="video-list" class="video-container">
+            <!-- Видео будут загружаться через JavaScript -->
+        </section>
+
+        <section id="video-player" class="hidden">
+            <div class="player-container">
+                <video id="main-video" controls poster="">
+                    Ваш браузер не поддерживает видео тег.
+                </video>
+                <div class="video-info">
+                    <h2 id="video-title"></h2>
+                    <div class="video-stats">
+                        <span id="video-views"></span>
+                        <div class="reactions">
+                            <button class="like-btn">
+                                <span id="likes-count">0</span> 👍
+                            </button>
+                            <button class="dislike-btn">
+                                <span id="dislikes-count">0</span> 👎
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comments-section">
+                    <h3>Комментарии</h3>
+                    <div class="comment-form">
+                        <input type="text" id="username" placeholder="Ваше имя">
+                        <textarea id="comment-text" placeholder="Ваш комментарий..."></textarea>
+                        <button id="submit-comment">Отправить</button>
+                    </div>
+                    <div id="comments-list" class="comments-list">
+                        <!-- Комментарии будут загружаться здесь -->
+                    </div>
+                </div>
+            </div>
+            <button id="back-button">← Назад к видео</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 VideoHost. Все права защищены.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
