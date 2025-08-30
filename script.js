@@ -1,6 +1,7 @@
 // Глобальные переменные
 let videosData = [];
 let currentVideo = null;
+let commentsData = {};
 
 // DOM элементы
 const videoListSection = document.getElementById('video-list');
@@ -8,19 +9,24 @@ const videoPlayerSection = document.getElementById('video-player');
 const videoPlayer = document.getElementById('main-video');
 const videoTitle = document.getElementById('video-title');
 const videoViews = document.getElementById('video-views');
-const backButton = document.getElementById('back-button');
 const commentsList = document.getElementById('comments-list');
 const usernameInput = document.getElementById('username');
 const commentTextInput = document.getElementById('comment-text');
 const submitCommentButton = document.getElementById('submit-comment');
 const cancelCommentButton = document.getElementById('cancel-comment');
 const suggestedList = document.querySelector('.suggested-list');
+const sidebar = document.querySelector('.sidebar');
+const menuToggle = document.querySelector('.menu-toggle');
 
 // Загрузка данных о видео
 async function loadVideos() {
     try {
-        // В реальном приложении здесь будет fetch к videos.json
-        // Для демонстрации используем временные данные
+        const response = await fetch('videos.json');
+        videosData = await response.json();
+        renderVideoList();
+    } catch (error) {
+        console.error('Ошибка загрузки видео:', error);
+        // Используем демо-данные если файл не найден
         videosData = [
             {
                 id: 1,
@@ -65,36 +71,9 @@ async function loadVideos() {
                 thumbnail: "thumb4.jpg",
                 channel: "UI Secrets",
                 duration: "18:33"
-            },
-            {
-                id: 5,
-                title: "React vs Vue - что выбрать в 2023 году?",
-                views: 221000,
-                likes: 14300,
-                dislikes: 210,
-                videoFile: "video5.mp4",
-                thumbnail: "thumb5.jpg",
-                channel: "Framework Wars",
-                duration: "27:09"
-            },
-            {
-                id: 6,
-                title: "Анимации на CSS - создаем потрясающие эффекты",
-                views: 98000,
-                likes: 7800,
-                dislikes: 95,
-                videoFile: "video6.mp4",
-                thumbnail: "thumb6.jpg",
-                channel: "CSS Animations",
-                duration: "21:45"
             }
         ];
-        
         renderVideoList();
-        renderSuggestedVideos();
-    } catch (error) {
-        console.error('Ошибка загрузки видео:', error);
-        videoListSection.innerHTML = '<p class="error">Не удалось загрузить видео. Попробуйте позже.</p>';
     }
 }
 
@@ -114,7 +93,7 @@ function renderVideoList() {
                 <h3 class="video-title">${video.title}</h3>
                 <div class="video-meta">
                     <span class="channel-name">${video.channel}</span>
-                    <span class="video-views">${formatViews(video.views)} просмотров</span>
+                    <span class="video-stats">${formatViews(video.views)} просмотров</span>
                 </div>
             </div>
         `;
@@ -147,46 +126,42 @@ function openVideo(videoId) {
     videoViews.textContent = `${formatViews(currentVideo.views)} просмотров`;
     
     // Переключаем видимость секций
-    videoListSection.classList.add('hidden');
-    videoPlayerSection.classList.remove('hidden');
+    videoListSection.style.display = 'none';
+    videoPlayerSection.style.display = 'grid';
     
     // Прокручиваем к верху страницы
     window.scrollTo(0, 0);
     
     // Загружаем комментарии
     loadComments();
+    
+    // Обновляем рекомендованные видео
+    renderSuggestedVideos();
+}
+
+// Назад к списку видео
+function backToVideos() {
+    videoPlayerSection.style.display = 'none';
+    videoListSection.style.display = 'grid';
+    videoPlayer.pause();
+    
+    // Очищаем поля комментариев
+    usernameInput.value = '';
+    commentTextInput.value = '';
 }
 
 // Загрузка комментариев
 async function loadComments() {
     try {
-        // В реальном приложении здесь будет fetch к kiments/[videoId].json
-        // Для демонстрации используем временные данные
-        const comments = [
-            {
-                author: "Алексей Петров",
-                text: "Отличное видео, многому научился! Спасибо за качественный контент.",
-                date: "2023-05-15T14:30:22Z",
-                likes: 42
-            },
-            {
-                author: "Мария Иванова",
-                text: "Очень подробное объяснение. Жду продолжения на эту тему!",
-                date: "2023-05-16T09:12:45Z",
-                likes: 28
-            },
-            {
-                author: "Дмитрий Смирнов",
-                text: "Спасибо за видео! Есть вопрос по поводу части в 12:35 - можно ли реализовать это иначе?",
-                date: "2023-05-17T18:40:13Z",
-                likes: 15
-            }
-        ];
-        
+        const response = await fetch(`kiments/${currentVideo.id}.json`);
+        const comments = await response.json();
+        commentsData[currentVideo.id] = comments;
         renderComments(comments);
     } catch (error) {
         console.error('Ошибка загрузки комментариев:', error);
-        commentsList.innerHTML = '<p class="error">Не удалось загрузить комментарии.</p>';
+        // Создаем пустой массив комментариев, если файл не найден
+        commentsData[currentVideo.id] = [];
+        commentsList.innerHTML = '<p class="no-comments">Пока нет комментариев. Будьте первым!</p>';
     }
 }
 
@@ -195,7 +170,7 @@ function renderComments(comments) {
     commentsList.innerHTML = '';
     
     if (comments.length === 0) {
-        commentsList.innerHTML = '<p>Пока нет комментариев. Будьте первым!</p>';
+        commentsList.innerHTML = '<p class="no-comments">Пока нет комментариев. Будьте первым!</p>';
         return;
     }
     
@@ -211,7 +186,7 @@ function renderComments(comments) {
                 <div class="comment-text">${comment.text}</div>
                 <div class="comment-meta">
                     <span>${new Date(comment.date).toLocaleDateString()}</span>
-                    <span><i class="fas fa-thumbs-up"></i> ${comment.likes}</span>
+                    <span><i class="fas fa-thumbs-up"></i> ${comment.likes || 0}</span>
                 </div>
             </div>
         `;
@@ -220,19 +195,16 @@ function renderComments(comments) {
 }
 
 // Отправка комментария
-submitCommentButton.addEventListener('click', async (e) => {
-    e.preventDefault();
-    
+async function submitComment() {
     const author = usernameInput.value.trim();
     const text = commentTextInput.value.trim();
     
     if (!author || !text) {
-        alert('Пожалуйста, заполните все поля');
+        showNotification('Пожалуйста, заполните все поля', 'error');
         return;
     }
     
     try {
-        // В реальном приложении здесь будет запрос к серверу
         const newComment = {
             author,
             text,
@@ -240,58 +212,39 @@ submitCommentButton.addEventListener('click', async (e) => {
             likes: 0
         };
         
-        // Загружаем текущие комментарии
-        let comments = [];
-        try {
-            // В реальном приложении - fetch к kiments/[videoId].json
-            comments = [
-                {
-                    author: "Алексей Петров",
-                    text: "Отличное видео, многому научился! Спасибо за качественный контент.",
-                    date: "2023-05-15T14:30:22Z",
-                    likes: 42
-                }
-            ];
-        } catch (error) {
-            console.log('Создаем новый файл комментариев');
+        // Добавляем комментарий к текущим
+        if (!commentsData[currentVideo.id]) {
+            commentsData[currentVideo.id] = [];
         }
+        commentsData[currentVideo.id].push(newComment);
         
-        // Добавляем новый комментарий
-        comments.push(newComment);
-        
-        // В реальном приложении здесь будет сохранение на сервере
-        console.log('Комментарий должен быть сохранен в', `kiments/${currentVideo.id}.json`);
+        // В реальном приложении здесь должен быть запрос на сохранение на сервере
+        // Для демонстрации используем localStorage
+        localStorage.setItem(`comments_${currentVideo.id}`, JSON.stringify(commentsData[currentVideo.id]));
         
         // Обновляем отображение
-        renderComments(comments);
+        renderComments(commentsData[currentVideo.id]);
         
-        // Очищаем поля формы
+        // Очищаем поле текста комментария
         commentTextInput.value = '';
         
-        alert('Комментарий добавлен! (в реальном приложении он бы сохранился на сервере)');
+        showNotification('Комментарий добавлен!', 'success');
         
     } catch (error) {
         console.error('Ошибка отправки комментария:', error);
-        alert('Не удалось отправить комментарий. Попробуйте позже.');
+        showNotification('Не удалось отправить комментарий. Попробуйте позже.', 'error');
     }
-});
-
-// Отмена комментария
-cancelCommentButton.addEventListener('click', () => {
-    usernameInput.value = '';
-    commentTextInput.value = '';
-});
+}
 
 // Рендер рекомендованных видео
 function renderSuggestedVideos() {
     suggestedList.innerHTML = '';
     
-    // Берем первые 5 видео для рекомендаций
-    const suggestedVideos = videosData.slice(0, 5);
+    // Фильтруем видео, исключая текущее
+    const suggestedVideos = videosData.filter(video => video.id !== currentVideo.id);
     
-    suggestedVideos.forEach(video => {
-        if (currentVideo && video.id === currentVideo.id) return; // Пропускаем текущее видео
-        
+    // Берем первые 4 видео для рекомендаций
+    suggestedVideos.slice(0, 4).forEach(video => {
         const suggestedItem = document.createElement('div');
         suggestedItem.className = 'suggested-item';
         suggestedItem.innerHTML = `
@@ -308,12 +261,84 @@ function renderSuggestedVideos() {
     });
 }
 
+// Показать уведомление
+function showNotification(message, type) {
+    // Удаляем предыдущее уведомление, если есть
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Показываем уведомление
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Скрываем через 3 секунды
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Переключение боковой панели
+function toggleSidebar() {
+    sidebar.classList.toggle('collapsed');
+}
+
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
+    // Загружаем видео
     loadVideos();
     
-    // Обработчик для кнопки меню
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-        document.querySelector('.sidebar').classList.toggle('collapsed');
+    // Скрываем плеер при загрузке
+    videoPlayerSection.style.display = 'none';
+    
+    // Обработчики событий
+    submitCommentButton.addEventListener('click', submitComment);
+    
+    cancelCommentButton.addEventListener('click', () => {
+        commentTextInput.value = '';
     });
+    
+    // Обработчик для кнопки меню
+    menuToggle.addEventListener('click', toggleSidebar);
+    
+    // Добавляем кнопку назад в плеер
+    const backButton = document.createElement('button');
+    backButton.className = 'back-button';
+    backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Назад к видео';
+    backButton.addEventListener('click', backToVideos);
+    
+    const playerWrapper = document.querySelector('.player-wrapper');
+    playerWrapper.insertBefore(backButton, playerWrapper.firstChild);
+    
+    // Загрузка комментариев из localStorage (для демо)
+    loadCommentsFromLocalStorage();
+});
+
+// Загрузка комментариев из localStorage (для демонстрации)
+function loadCommentsFromLocalStorage() {
+    videosData.forEach(video => {
+        const storedComments = localStorage.getItem(`comments_${video.id}`);
+        if (storedComments) {
+            commentsData[video.id] = JSON.parse(storedComments);
+        }
+    });
+}
+
+// Обработка нажатия клавиши Enter в поле комментария
+commentTextInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitComment();
+    }
 });
