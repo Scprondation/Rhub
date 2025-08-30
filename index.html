@@ -3,64 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VideoHost - Ваша видеоплатформа</title>
+    <title>VideoHub - Платформа для видео</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <h1>VideoHost</h1>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <i class="fab fa-youtube"></i>
+                <span>VideoHub</span>
+            </div>
         </div>
-        <div class="search">
-            <input type="text" placeholder="Поиск видео...">
-            <button>Найти</button>
+        
+        <div class="nav-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Поиск видео...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </div>
-    </header>
+        
+        <div class="nav-right">
+            <button class="upload-btn">
+                <i class="fas fa-upload"></i>
+            </button>
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <section id="video-list" class="video-container">
-            <!-- Видео будут загружаться через JavaScript -->
-        </section>
+    <!-- Основное содержимое -->
+    <div class="container">
+        <!-- Боковая панель -->
+        <aside class="sidebar">
+            <div class="sidebar-item active">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-fire"></i>
+                <span>Популярное</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-history"></i>
+                <span>История</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-clock"></i>
+                <span>Смотреть позже</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-thumbs-up"></i>
+                <span>Понравившиеся</span>
+            </div>
+            <hr>
+            <div class="sidebar-item">
+                <i class="fas fa-music"></i>
+                <span>Музыка</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-gamepad"></i>
+                <span>Игры</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-newspaper"></i>
+                <span>Новости</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-trophy"></i>
+                <span>Спорт</span>
+            </div>
+        </aside>
 
-        <section id="video-player" class="hidden">
-            <div class="player-container">
-                <video id="main-video" controls poster="">
-                    Ваш браузер не поддерживает видео тег.
-                </video>
-                <div class="video-info">
-                    <h2 id="video-title"></h2>
-                    <div class="video-stats">
-                        <span id="video-views"></span>
-                        <div class="reactions">
-                            <button class="like-btn">
-                                <span id="likes-count">0</span> 👍
-                            </button>
-                            <button class="dislike-btn">
-                                <span id="dislikes-count">0</span> 👎
-                            </button>
+        <!-- Главный контент -->
+        <main class="content">
+            <section id="video-list" class="video-grid">
+                <!-- Видео будут загружаться через JavaScript -->
+            </section>
+
+            <section id="video-player" class="hidden">
+                <div class="player-wrapper">
+                    <div class="video-container">
+                        <video id="main-video" controls poster=""></video>
+                    </div>
+                    
+                    <div class="video-details">
+                        <h1 id="video-title"></h1>
+                        <div class="video-meta">
+                            <span id="video-views"></span>
+                            <div class="action-buttons">
+                                <button class="action-btn">
+                                    <i class="fas fa-share"></i>
+                                    <span>Поделиться</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-download"></i>
+                                    <span>Скачать</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-save"></i>
+                                    <span>Сохранить</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comments-section">
+                        <h2>Комментарии</h2>
+                        <div class="comment-form">
+                            <div class="user-avatar small">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="comment-input">
+                                <input type="text" id="username" placeholder="Ваше имя">
+                                <textarea id="comment-text" placeholder="Добавьте комментарий..."></textarea>
+                                <div class="comment-actions">
+                                    <button id="cancel-comment">Отмена</button>
+                                    <button id="submit-comment">Комментировать</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="comments-list" class="comments-list">
+                            <!-- Комментарии будут загружаться здесь -->
                         </div>
                     </div>
                 </div>
                 
-                <div class="comments-section">
-                    <h3>Комментарии</h3>
-                    <div class="comment-form">
-                        <input type="text" id="username" placeholder="Ваше имя">
-                        <textarea id="comment-text" placeholder="Ваш комментарий..."></textarea>
-                        <button id="submit-comment">Отправить</button>
-                    </div>
-                    <div id="comments-list" class="comments-list">
-                        <!-- Комментарии будут загружаться здесь -->
+                <div class="suggested-videos">
+                    <h3>Рекомендуемые видео</h3>
+                    <div class="suggested-list">
+                        <!-- Рекомендуемые видео будут здесь -->
                     </div>
                 </div>
-            </div>
-            <button id="back-button">← Назад к видео</button>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2023 VideoHost. Все права защищены.</p>
-    </footer>
+            </section>
+        </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
