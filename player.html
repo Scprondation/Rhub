@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoHub - Просмотр видео</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="logo">
+                <i class="fab fa-youtube"></i>
+                <span>VideoHub</span>
+            </div>
+        </div>
+        
+        <div class="nav-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Поиск видео...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="upload-btn">
+                <i class="fas fa-upload"></i>
+            </button>
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое -->
+    <div class="container">
+        <!-- Боковая панель -->
+        <aside class="sidebar">
+            <div class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-fire"></i>
+                <span>Популярное</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-history"></i>
+                <span>История</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-clock"></i>
+                <span>Смотреть позже</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-thumbs-up"></i>
+                <span>Понравившиеся</span>
+            </div>
+            <hr>
+            <div class="sidebar-item">
+                <i class="fas fa-music"></i>
+                <span>Музыка</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-gamepad"></i>
+                <span>Игры</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-newspaper"></i>
+                <span>Новости</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-trophy"></i>
+                <span>Спорт</span>
+            </div>
+        </aside>
+
+        <!-- Контент плеера -->
+        <main class="content">
+            <div class="player-wrapper">
+                <div class="video-container">
+                    <video id="main-video" controls poster=""></video>
+                </div>
+                
+                <div class="video-details">
+                    <h1 id="video-title"></h1>
+                    <div class="video-meta">
+                        <span id="video-views"></span>
+                        <div class="action-buttons">
+                            <button class="action-btn">
+                                <i class="fas fa-share"></i>
+                                <span>Поделиться</span>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать</span>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-save"></i>
+                                <span>Сохранить</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comments-section">
+                    <h2>Комментарии</h2>
+                    <div class="comment-form">
+                        <div class="user-avatar small">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="comment-input">
+                            <input type="text" id="username" placeholder="Ваше имя">
+                            <textarea id="comment-text" placeholder="Добавьте комментарий..."></textarea>
+                            <div class="comment-actions">
+                                <button id="cancel-comment">Отмена</button>
+                                <button id="submit-comment">Комментировать</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="comments-list" class="comments-list">
+                        <!-- Комментарии будут загружаться здесь -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="suggested-videos">
+                <h3>Рекомендуемые видео</h3>
+                <div class="suggested-list" id="suggested-list">
+                    <!-- Рекомендуемые видео будут здесь -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="player.js"></script>
+</body>
+</html>
