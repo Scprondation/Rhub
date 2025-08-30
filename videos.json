@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "Как создать сайт за 10 минут",
+        "views": 125000,
+        "likes": 8500,
+        "dislikes": 120,
+        "videoFile": "video1.mp4",
+        "thumbnail": "thumb1.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Изучение JavaScript для начинающих",
+        "views": 480000,
+        "likes": 24500,
+        "dislikes": 350,
+        "videoFile": "video2.mp4",
+        "thumbnail": "thumb2.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Верстка на CSS Grid и Flexbox",
+        "views": 89000,
+        "likes": 6200,
+        "dislikes": 85,
+        "videoFile": "video3.mp4",
+        "thumbnail": "thumb3.jpg"
+    },
+    {
+        "id": 4,
+        "title": "Создание темной темы для сайта",
+        "views": 156000,
+        "likes": 11200,
+        "dislikes": 140,
+        "videoFile": "video4.mp4",
+        "thumbnail": "thumb4.jpg"
+    }
+]
