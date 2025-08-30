@@ -16,64 +16,12 @@ const suggestedList = document.getElementById('suggested-list');
 const menuToggle = document.querySelector('.menu-toggle');
 const sidebar = document.querySelector('.sidebar');
 
-// Загрузка данных о видео
 async function loadVideos() {
     try {
         const response = await fetch('videos.json');
         videosData = await response.json();
         loadCurrentVideo();
-    } catch (error) {
-        console.error('Ошибка загрузки видео:', error);
-        // Используем демо-данные если файл не найден
-        videosData = [
-            {
-                id: 1,
-                title: "Как создать сайт за 10 минут - полное руководство для начинающих",
-                views: 125000,
-                likes: 8500,
-                dislikes: 120,
-                videoFile: "video1.mp4",
-                thumbnail: "thumb1.jpg",
-                channel: "WebDev Master",
-                duration: "15:22"
-            },
-            {
-                id: 2,
-                title: "Изучение JavaScript для начинающих - полный курс 2023",
-                views: 480000,
-                likes: 24500,
-                dislikes: 350,
-                videoFile: "video2.mp4",
-                thumbnail: "thumb2.jpg",
-                channel: "CodeWithMe",
-                duration: "32:18"
-            },
-            {
-                id: 3,
-                title: "Верстка на CSS Grid и Flexbox - современные техники",
-                views: 89000,
-                likes: 6200,
-                dislikes: 85,
-                videoFile: "video3.mp4",
-                thumbnail: "thumb3.jpg",
-                channel: "Frontend Pro",
-                duration: "24:47"
-            },
-            {
-                id: 4,
-                title: "Создание темной темы для сайта - полное руководство",
-                views: 156000,
-                likes: 11200,
-                dislikes: 140,
-                videoFile: "video4.mp4",
-                thumbnail: "thumb4.jpg",
-                channel: "UI Secrets",
-                duration: "18:33"
-            }
-        ];
-        loadCurrentVideo();
-    }
-}
+    } 
 
 // Загрузка текущего видео на основе ID из URL
 function loadCurrentVideo() {
