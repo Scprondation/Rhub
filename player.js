@@ -44,11 +44,27 @@ function loadCurrentVideo() {
         return;
     }
     
-    videoPlayer.src = currentVideo.videoUrl;
+    videoPlayer.innerHTML = `
+        <source src="${currentVideo.videoUrl}" type="video/mp4">
+        Ваш браузер не поддерживает видео тег.
+    `;
+    
     videoPlayer.poster = currentVideo.thumbnailUrl;
     videoTitle.textContent = currentVideo.title;
     videoViews.textContent = `${formatViews(currentVideo.views)} просмотров`;
     videoDate.textContent = `Опубликовано: ${formatDate(currentVideo.date)}`;
+    
+    // Настройка обработчиков ошибок для видео
+    videoPlayer.addEventListener('error', function() {
+        console.error('Ошибка загрузки видео:', currentVideo.videoUrl);
+        videoPlayer.innerHTML = `
+            <div style="padding: 20px; text-align: center; color: #ff3366;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                <p>Не удалось загрузить видео. Пожалуйста, проверьте ссылку.</p>
+                <p><small>${currentVideo.videoUrl}</small></p>
+            </div>
+        `;
+    });
     
     renderSuggestedVideos();
 }
@@ -76,7 +92,7 @@ function renderSuggestedVideos() {
         const suggestedItem = document.createElement('div');
         suggestedItem.className = 'suggested-item';
         suggestedItem.innerHTML = `
-            <img src="${video.thumbnailUrl}" alt="${video.title}" class="suggested-thumb">
+            <img src="${video.thumbnailUrl}" alt="${video.title}" class="suggested-thumb" onerror="this.src='https://via.placeholder.com/160x90/333333/ffffff?text=Ошибка+загрузки'">
             <div class="suggested-info">
                 <div class="suggested-title">${video.title}</div>
                 <div class="suggested-channel">${video.channel}</div>
