@@ -3,6 +3,8 @@ const videoListSection = document.getElementById('video-list');
 
 async function loadVideos() {
     try {
+        videoListSection.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
+        
         const response = await fetch('videos.json');
         if (!response.ok) {
             throw new Error('Не удалось загрузить данные о видео');
@@ -29,7 +31,7 @@ function renderVideoList() {
         videoCard.className = 'video-card';
         videoCard.innerHTML = `
             <div class="thumbnail-container">
-                <img src="${video.thumbnailUrl}" alt="${video.title}" class="video-thumbnail">
+                <img src="${video.thumbnailUrl}" alt="${video.title}" class="video-thumbnail" onerror="this.src='https://via.placeholder.com/320x200/333333/ffffff?text=Ошибка+загрузки+превью'">
                 <div class="video-duration">${video.duration}</div>
             </div>
             <div class="video-info">
